@@ -28,8 +28,12 @@ class ContextWindow extends React.Component {
     componentDidMount() {
         const ace = new AceEditor('contextEditor', {});
 
+        const contextWindowState = window.localStorage.getItem('jseContextWindowState') || '';
+        ace.editor.setValue(contextWindowState, -1);
+
         this.setState({
-            editor: ace.editor
+            editor: ace.editor,
+            context: contextWindowState
         });
 
         ace.editor.getSession().on('change', function () {
@@ -39,6 +43,7 @@ class ContextWindow extends React.Component {
             });
 
             this.props.onChange({context: context});
+            window.localStorage.setItem('jseContextWindowState', context);
         }.bind(this));
     }
 

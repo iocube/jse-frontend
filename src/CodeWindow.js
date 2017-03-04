@@ -30,8 +30,12 @@ class CodeWindow extends React.Component {
             mode: 'ace/mode/javascript'
         });
 
+        const codeWindowState = window.localStorage.getItem('jseCodeWindowState') || '';
+        ace.editor.setValue(codeWindowState, -1);
+
         this.setState({
-            editor: ace.editor
+            editor: ace.editor,
+            code: codeWindowState
         });
 
         ace.editor.getSession().on('change', function (e) {
@@ -41,6 +45,7 @@ class CodeWindow extends React.Component {
             });
 
             this.props.onChange({code: code});
+            window.localStorage.setItem('jseCodeWindowState', code);
         }.bind(this));
     }
 
