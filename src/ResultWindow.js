@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AceEditor from './AceEditor';
+
 
 class ResultWindow extends React.Component {
     constructor(props) {
@@ -23,17 +25,15 @@ class ResultWindow extends React.Component {
     }
 
     componentDidMount() {
-        const editor = window.ace.edit("resultViewer");
-        editor.setShowPrintMargin(false);
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/json");
-        editor.setReadOnly(true);
-
-        this.setState({
-            editor: editor
+        const ace = new AceEditor('resultViewer', {
+            readOnly: true
         });
 
-        editor.setValue(this.props.executionResult);
+        this.setState({
+            editor: ace.editor
+        });
+
+        ace.editor.setValue(this.props.executionResult);
     }
 
     componentWillReceiveProps(nextProps) {

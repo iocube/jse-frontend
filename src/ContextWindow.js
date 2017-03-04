@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AceEditor from './AceEditor';
+
 
 class ContextWindow extends React.Component {
     constructor(props) {
@@ -24,17 +26,14 @@ class ContextWindow extends React.Component {
     }
 
     componentDidMount() {
-        const editor = window.ace.edit("contextEditor");
-        editor.setShowPrintMargin(false);
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/json");
+        const ace = new AceEditor('contextEditor', {});
 
         this.setState({
-            editor: editor
-        })
+            editor: ace.editor
+        });
 
-        editor.getSession().on('change', function (e) {
-            let context = editor.getValue();
+        ace.editor.getSession().on('change', function () {
+            let context = this.state.editor.getValue();
             this.setState({
                 context: context
             });

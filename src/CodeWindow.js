@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AceEditor from './AceEditor';
+
 
 class CodeWindow extends React.Component {
     constructor(props) {
@@ -24,17 +26,16 @@ class CodeWindow extends React.Component {
     }
 
     componentDidMount() {
-        const editor = window.ace.edit("codeEditor");
-        editor.setShowPrintMargin(false); // hide vertical line
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
-
-        this.setState({
-            editor: editor
+        const ace = new AceEditor('codeEditor', {
+            mode: 'ace/mode/javascript'
         });
 
-        editor.getSession().on('change', function (e) {
-            let code = editor.getValue();
+        this.setState({
+            editor: ace.editor
+        });
+
+        ace.editor.getSession().on('change', function (e) {
+            let code = this.state.editor.getValue();
             this.setState({
                 code: code
             });
