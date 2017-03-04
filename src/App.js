@@ -42,7 +42,11 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <RunButton onRunClick={this.onRunClick}/>
+                <div>
+                    <RunButton onRunClick={this.onRunClick}/>
+                    <button>Modules</button>
+                    <button>Language</button>
+                </div>
                 <CodeWindow onChange={this.onChange}/>
                 <ContextWindow onChange={this.onChange}/>
                 <ResultWindow executionResult={this.state.executionResult} executionError={this.state.executionError}/>
