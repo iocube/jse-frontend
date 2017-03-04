@@ -35,6 +35,7 @@ class ContextWindow extends React.Component {
             editor: ace.editor,
             context: contextWindowState
         });
+        this.props.onChange({context: contextWindowState});
 
         ace.editor.getSession().on('change', function () {
             let context = this.state.editor.getValue();

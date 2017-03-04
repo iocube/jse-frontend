@@ -37,6 +37,7 @@ class CodeWindow extends React.Component {
             editor: ace.editor,
             code: codeWindowState
         });
+        this.props.onChange({code: codeWindowState});
 
         ace.editor.getSession().on('change', function (e) {
             let code = this.state.editor.getValue();
