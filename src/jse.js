@@ -28,6 +28,14 @@ const jse = {
             body: JSON.stringify(payload)
         })
         .then(toJson);
+    },
+
+    getModules() {
+        return fetch(JSE_BASE_URL + 'modules', {
+            method: 'GET',
+            mode: 'cors',
+            headers: new Headers({'Content-Type': 'application/json'})
+        }).then(toJson);
     }
 };
 
