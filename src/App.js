@@ -8,6 +8,7 @@ import CodeWindow from './CodeWindow';
 import ContextWindow from './ContextWindow';
 import ResultWindow from './ResultWindow';
 import RunButton from './RunButton';
+import ModuleSelect from './ModuleSelect';
 
 
 class App extends React.Component {
@@ -18,11 +19,14 @@ class App extends React.Component {
             code: '',
             context: '',
             executionResult: '',
-            executionError: ''
+            executionError: '',
+            isModuleSelectOpen: false
         };
 
         this.onChange = this.onChange.bind(this);
         this.onRunClick = this.onRunClick.bind(this);
+        this.openModuleSelect = this.openModuleSelect.bind(this);
+        this.closeModuleSelect = this.closeModuleSelect.bind(this);
     }
 
     onChange(updated) {
@@ -39,12 +43,26 @@ class App extends React.Component {
             });
     }
 
+    openModuleSelect() {
+        this.setState({
+            isModuleSelectOpen: true
+        });
+    }
+
+    closeModuleSelect() {
+        this.setState({
+            isModuleSelectOpen: false
+        });
+    }
+
     render() {
         return (
             <div>
                 <div>
                     <RunButton onRunClick={this.onRunClick}/>
-                    <button>Modules</button>
+                    <button onClick={this.openModuleSelect}>Modules</button>
+                    <ModuleSelect onCloseClick={this.closeModuleSelect}
+                                  isOpen={this.state.isModuleSelectOpen}/>
                     <button>Language</button>
                 </div>
                 <CodeWindow onChange={this.onChange}/>
