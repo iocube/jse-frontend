@@ -14,8 +14,6 @@ class ModuleSelect extends React.Component {
 
         this.filterByModuleName = this.filterByModuleName.bind(this);
         this.toggleModule = this.toggleModule.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.onCloseClickWrapper = this.onCloseClickWrapper.bind(this);
     }
 
     filterByModuleName(event) {
@@ -55,47 +53,23 @@ class ModuleSelect extends React.Component {
         this.props.onUpdate(updatedModules);
     }
 
-    handleClick(ev) {
-        if ((ev.target !== this.element) && (!this.element.contains(ev.target))) {
-            this.onCloseClickWrapper();
-        }
-    }
-
-    componentWillReceiveProps(newProps) {
-        if (!this.props.isOpen && newProps.isOpen) {
-            console.log('add event');
-            document.body.addEventListener('click', this.handleClick);
-        }
-    }
-
-    onCloseClickWrapper() {
-        console.log('remove event');
-        document.body.removeEventListener('click', this.handleClick);
-        this.props.onCloseClick();
-    }
-
     render() {
-        if (this.props.isOpen) {
-            const modules = this.state.filteredModules.map((module) => {
-                let className = this.state.selectedModules.indexOf(module.name) >= 0 ? 'module-item module-item--selected' : 'module-item';
+        const modules = this.state.filteredModules.map((module) => {
+            let className = this.state.selectedModules.indexOf(module.name) >= 0 ? 'module-item module-item--selected' : 'module-item';
 
-                return <li className={className} onClick={() => this.toggleModule(module.name)}
-                           key={module.name}>name: {module.name}, alias: {module.alias}
-                       </li>
-            });
+            return <li className={className} onClick={() => this.toggleModule(module.name)}
+                       key={module.name}>name: {module.name}, alias: {module.alias}
+                   </li>
+        });
 
-            return (
-                <div style={{position: 'absolute', background: '#fff', 'zIndex': 10}} ref={(e) => {this.element = e;}}>
-                    <input type="text" onChange={this.filterByModuleName}/>
-                    <ul style={{listStyle: 'none', padding: 0}}>
-                        {modules}
-                    </ul>
-                    <button onClick={this.onCloseClickWrapper}>Close</button>
-                </div>
-            )
-        }
-
-        return null;
+        return (
+            <div>
+                <input type="text" onChange={this.filterByModuleName}/>
+                <ul style={{listStyle: 'none', padding: 0}}>
+                    {modules}
+                </ul>
+            </div>
+        )
     }
 
     componentDidMount() {

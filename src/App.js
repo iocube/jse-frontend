@@ -10,6 +10,7 @@ import ResultWindow from './ResultWindow';
 import RunButton from './RunButton';
 import ModuleSelect from './ModuleSelect';
 import LanguageSelect from './LanguageSelect';
+import Modal from './Modal';
 
 
 class App extends React.Component {
@@ -83,7 +84,7 @@ class App extends React.Component {
 
     onLanguageSelect(language) {
         this.setState({
-            selectedLanguage: language
+            selectedLanguage: language.value
         })
     }
 
@@ -92,14 +93,18 @@ class App extends React.Component {
             <div>
                 <div>
                     <RunButton onRunClick={this.onRunClick}/>
+
                     <button onClick={this.openModuleSelect}>Modules</button>
-                    <ModuleSelect onCloseClick={this.closeModuleSelect}
-                                  isOpen={this.state.isModuleSelectOpen}
-                                  onUpdate={this.onModuleUpdate}/>
-                    <button>Language</button>
-                    <LanguageSelect onCloseClick={this.closeLanguageSelect}
-                                    isOpen={this.state.isLanguageSelectOpen}
-                                    onLanguageSelect={this.onLanguageSelect}/>
+                    <Modal onCloseClick={this.closeModuleSelect}
+                            isOpen={this.state.isModuleSelectOpen}>
+                        <ModuleSelect onUpdate={this.onModuleUpdate}/>
+                    </Modal>
+
+                    <button onClick={this.openLanguageSelect}>Language</button>
+                    <Modal onCloseClick={this.closeLanguageSelect}
+                            isOpen={this.state.isLanguageSelectOpen}>
+                        <LanguageSelect onLanguageSelect={this.onLanguageSelect}/>
+                    </Modal>
                 </div>
                 <CodeWindow onChange={this.onChange}/>
                 <ContextWindow onChange={this.onChange}/>

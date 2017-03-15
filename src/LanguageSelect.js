@@ -20,9 +20,12 @@ class LanguageSelect extends React.Component {
 
     selectLanguage(language) {
         if (this.state.language !== language.value) {
+
             this.setState({
                 language: language.value
             });
+
+            this.props.onLanguageSelect(language);
         }
     }
 
