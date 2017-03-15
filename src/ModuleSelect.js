@@ -35,20 +35,24 @@ class ModuleSelect extends React.Component {
     }
 
     toggleModule(moduleName) {
+        let updatedModules;
+
         if (this.state.selectedModules.indexOf(moduleName) >= 0) {
             // remove
-            let updatedModules = this.state.selectedModules.concat();
+            updatedModules = this.state.selectedModules.concat();
             updatedModules.splice(this.state.selectedModules.indexOf(moduleName), 1);
 
             this.setState({
                 selectedModules: updatedModules
             });
-
         } else {
+            updatedModules = this.state.selectedModules.concat(moduleName);
             this.setState({
-                selectedModules: this.state.selectedModules.concat(moduleName)
+                selectedModules: updatedModules
             });
         }
+
+        this.props.onUpdate(updatedModules);
     }
 
     handleClick(ev) {
@@ -110,7 +114,8 @@ class ModuleSelect extends React.Component {
 
 ModuleSelect.propTypes = {
     isOpen: React.PropTypes.bool,
-    onCloseClick: React.PropTypes.func
+    onCloseClick: React.PropTypes.func,
+    onUpdate: React.PropTypes.func
 };
 
 

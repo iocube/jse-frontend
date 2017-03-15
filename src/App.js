@@ -20,13 +20,15 @@ class App extends React.Component {
             context: '',
             executionResult: '',
             executionError: '',
-            isModuleSelectOpen: false
+            isModuleSelectOpen: false,
+            selectedModules: []
         };
 
         this.onChange = this.onChange.bind(this);
         this.onRunClick = this.onRunClick.bind(this);
         this.openModuleSelect = this.openModuleSelect.bind(this);
         this.closeModuleSelect = this.closeModuleSelect.bind(this);
+        this.onModuleUpdate = this.onModuleUpdate.bind(this);
     }
 
     onChange(updated) {
@@ -55,6 +57,12 @@ class App extends React.Component {
         });
     }
 
+    onModuleUpdate(selectedModules) {
+        this.setState({
+            selectedModules: selectedModules
+        });
+    }
+
     render() {
         return (
             <div>
@@ -62,7 +70,8 @@ class App extends React.Component {
                     <RunButton onRunClick={this.onRunClick}/>
                     <button onClick={this.openModuleSelect}>Modules</button>
                     <ModuleSelect onCloseClick={this.closeModuleSelect}
-                                  isOpen={this.state.isModuleSelectOpen}/>
+                                  isOpen={this.state.isModuleSelectOpen}
+                                  onUpdate={this.onModuleUpdate}/>
                     <button>Language</button>
                 </div>
                 <CodeWindow onChange={this.onChange}/>
