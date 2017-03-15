@@ -9,6 +9,7 @@ import ContextWindow from './ContextWindow';
 import ResultWindow from './ResultWindow';
 import RunButton from './RunButton';
 import ModuleSelect from './ModuleSelect';
+import LanguageSelect from './LanguageSelect';
 
 
 class App extends React.Component {
@@ -21,7 +22,9 @@ class App extends React.Component {
             executionResult: '',
             executionError: '',
             isModuleSelectOpen: false,
-            selectedModules: []
+            selectedModules: [],
+            isLanguageSelectOpen: false,
+            selectedLanguage: ''
         };
 
         this.onChange = this.onChange.bind(this);
@@ -29,6 +32,9 @@ class App extends React.Component {
         this.openModuleSelect = this.openModuleSelect.bind(this);
         this.closeModuleSelect = this.closeModuleSelect.bind(this);
         this.onModuleUpdate = this.onModuleUpdate.bind(this);
+        this.openLanguageSelect = this.openLanguageSelect.bind(this);
+        this.closeLanguageSelect = this.closeLanguageSelect.bind(this);
+        this.onLanguageSelect = this.onLanguageSelect.bind(this);
     }
 
     onChange(updated) {
@@ -63,6 +69,24 @@ class App extends React.Component {
         });
     }
 
+    openLanguageSelect() {
+        this.setState({
+            isLanguageSelectOpen: true
+        })
+    }
+
+    closeLanguageSelect() {
+        this.setState({
+            isLanguageSelectOpen: false
+        })
+    }
+
+    onLanguageSelect(language) {
+        this.setState({
+            selectedLanguage: language
+        })
+    }
+
     render() {
         return (
             <div>
@@ -73,6 +97,9 @@ class App extends React.Component {
                                   isOpen={this.state.isModuleSelectOpen}
                                   onUpdate={this.onModuleUpdate}/>
                     <button>Language</button>
+                    <LanguageSelect onCloseClick={this.closeLanguageSelect}
+                                    isOpen={this.state.isLanguageSelectOpen}
+                                    onLanguageSelect={this.onLanguageSelect}/>
                 </div>
                 <CodeWindow onChange={this.onChange}/>
                 <ContextWindow onChange={this.onChange}/>

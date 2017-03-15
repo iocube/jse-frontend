@@ -12,3 +12,12 @@ body {
 .module-item--selected{
     background: #e2e2e2;
 }
+
+.language-item {
+    cursor: pointer;
+}
+
+.language-item:hover,
+.language-item--selected {
+    background: #e2e2e2;
+}
