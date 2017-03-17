@@ -6,10 +6,7 @@ import AceEditor from './AceEditor';
 class ResultWindow extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            editor: {}
-        }
+        this.editor = {}
     }
 
     render() {
@@ -29,23 +26,12 @@ class ResultWindow extends React.Component {
             readOnly: true
         });
 
-        this.setState({
-            editor: ace.editor
-        });
-
-        ace.editor.setValue(this.props.executionResult);
+        this.editor = ace.editor;
     }
 
     componentWillReceiveProps(nextProps) {
-        if (JSON.stringify(nextProps.executionResult) !== JSON.stringify(this.props.executionResult)) {
-            this.state.editor.setValue(JSON.stringify(nextProps.executionResult, null, '\t'), 1);
-            // move the cursor to the end
-
-        } else if (JSON.stringify(nextProps.executionError) !== JSON.stringify(this.props.executionError)) {
-            const stack = nextProps.executionError.stack;
-
-            const errorDescription = `${stack}`;
-            this.state.editor.setValue(errorDescription, 1);
+        if (nextProps.executionResult !== this.props.executionResult) {
+            this.editor.setValue(nextProps.executionResult, 1);
         }
     }
 }

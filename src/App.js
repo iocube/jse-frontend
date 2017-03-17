@@ -7,7 +7,6 @@ import jse from './jse.js';
 import CodeWindow from './CodeWindow';
 import ContextWindow from './ContextWindow';
 import ResultWindow from './ResultWindow';
-import RunButton from './RunButton';
 import ModuleSelect from './ModuleSelect';
 import LanguageSelect from './LanguageSelect';
 import Modal from './Modal';
@@ -21,7 +20,6 @@ class App extends React.Component {
             code: '',
             context: '',
             executionResult: '',
-            executionError: '',
             isModuleSelectOpen: false,
             selectedModules: [],
             isLanguageSelectOpen: false,
@@ -29,7 +27,7 @@ class App extends React.Component {
         };
 
         this.onChange = this.onChange.bind(this);
-        this.onRunClick = this.onRunClick.bind(this);
+        this.runCode = this.runCode.bind(this);
         this.openModuleSelect = this.openModuleSelect.bind(this);
         this.closeModuleSelect = this.closeModuleSelect.bind(this);
         this.onModuleUpdate = this.onModuleUpdate.bind(this);
@@ -42,13 +40,17 @@ class App extends React.Component {
         this.setState(updated);
     }
 
-    onRunClick() {
+    runCode() {
         jse.run(this.state.code, JSON.parse(this.state.context))
             .then(executionResult => {
-                this.setState({executionResult: executionResult});
+                this.setState({
+                    executionResult: JSON.stringify(executionResult, null, '\t')
+                });
             })
             .catch(executionError => {
-                this.setState({executionError: executionError});
+                this.setState({
+                    executionResult: executionError.stack
+                });
             });
     }
 
@@ -92,7 +94,7 @@ class App extends React.Component {
         return (
             <div>
                 <div>
-                    <RunButton onRunClick={this.onRunClick}/>
+                    <button onClick={this.runCode}>Run</button>
 
                     <button onClick={this.openModuleSelect}>Modules</button>
                     <Modal onCloseClick={this.closeModuleSelect}
@@ -108,7 +110,7 @@ class App extends React.Component {
                 </div>
                 <CodeWindow onChange={this.onChange}/>
                 <ContextWindow onChange={this.onChange}/>
-                <ResultWindow executionResult={this.state.executionResult} executionError={this.state.executionError}/>
+                <ResultWindow executionResult={this.state.executionResult}/>
             </div>
         )
     }
