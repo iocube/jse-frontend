@@ -1,4 +1,4 @@
-const JSE_BASE_URL = 'http://localhost:8000/';
+const JSE_BASE_URL = 'http://localhost:8000';
 
 function toJson(response) {
     if (response.ok) {
@@ -21,7 +21,7 @@ const jse = {
 
         const headers = new Headers({"Content-Type": "application/json"});
 
-        return fetch(JSE_BASE_URL, {
+        return fetch(`${JSE_BASE_URL}/code`, {
             method: 'POST',
             mode: 'cors',
             headers: headers,
@@ -31,7 +31,7 @@ const jse = {
     },
 
     getModules() {
-        return fetch(JSE_BASE_URL + 'modules', {
+        return fetch(`${JSE_BASE_URL}/modules`, {
             method: 'GET',
             mode: 'cors',
             headers: new Headers({'Content-Type': 'application/json'})
