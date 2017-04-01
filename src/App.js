@@ -41,7 +41,7 @@ class App extends React.Component {
     }
 
     runCode() {
-        jse.run(this.state.code, JSON.parse(this.state.context))
+        jse.run(this.state.code, JSON.parse(this.state.context), this.state.selectedModules)
             .then(executionResult => {
                 this.setState({
                     executionResult: JSON.stringify(executionResult, null, '\t')

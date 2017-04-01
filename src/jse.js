@@ -11,12 +11,12 @@ function toJson(response) {
 }
 
 const jse = {
-    run(code, context) {
+    run(code, context, modules = []) {
         const payload = {
             code: code,
             context: context,
             language: 'javascript',
-            modules: []
+            modules: modules
         };
 
         const headers = new Headers({"Content-Type": "application/json"});
